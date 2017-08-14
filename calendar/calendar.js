@@ -11,7 +11,14 @@ $(document).ready(function(){
         }else {
             month = month-1;
         }
-        fillCalendar(month, year);
+
+        $('#calendar').addClass('hidden');
+
+        setTimeout(
+            function(){ fillCalendar(month, year);
+                $('#calendar').removeClass('hidden');
+                $('#calendar').addClass('visible');
+            }, 300);
     });
 
     $('#controls .next').on('click', function(){
@@ -21,17 +28,28 @@ $(document).ready(function(){
         }else {
             month = month+1;
         }
-        fillCalendar(month, year);
-    });
+
+        $('#calendar').addClass('hidden');
+
+        setTimeout(
+            function(){
+                        fillCalendar(month, year);
+                        $('#calendar').removeClass('hidden');
+                        $('#calendar').addClass('visible');
+                    },
+                    300);
+        });
 
     fillCalendar(month, year);
 });
 function fillCalendar(month, year){
+    let days;
     // weeks = $('#calendar_days ul');
     days = $('#calendar_days li');
-    firsDayOfMonth = getFirstDayOfMonth(month, year);
-    daysOfMonth = getDaysOfMonth(month, year);
-    daysOfMonthPreviousMonth = (month == 0) ? getDaysOfMonth( 11, year ) : getDaysOfMonth( month-1, year );
+
+    let firsDayOfMonth = getFirstDayOfMonth(month, year);
+    let daysOfMonth = getDaysOfMonth(month, year);
+    let daysOfMonthPreviousMonth = (month == 0) ? getDaysOfMonth( 11, year ) : getDaysOfMonth( month-1, year );
     let d = new Date();
     let currentDay = d.getDate();
     let currentMonth = d.getMonth();
@@ -75,7 +93,7 @@ function fillHolidayDays(month, year){
     var callbackSucces = function(data){
         let holidays = getHolidaysOfMonth(month, data);
 
-        days = $('#calendar_days li');
+        let days = $('#calendar_days li');
 
         $(days).each( function(i, item){
             if( !$(item).hasClass('other') ){
